@@ -1,4 +1,4 @@
-[URL="https://forums.alliedmods.net/showthread.php?p=2522638&nojs=1#goto_threadrating"]Rate Thread		 [IMG]https://forums.alliedmods.net/images/misc/menu_open.svg[/IMG][IMG]https://forums.alliedmods.net/images/rating/rating_5.svg[/IMG][/URL]
+[URL="https://forums.alliedmods.net/showthread.php?p=2604368&nojs=1#goto_threadrating"]Rate Thread		 [IMG]https://forums.alliedmods.net/images/misc/menu_open.svg[/IMG][IMG]https://forums.alliedmods.net/images/rating/rating_5.svg[/IMG][/URL]
 
 
 [B][SIZE="5"]MyWeaponAllocator[/SIZE][/B] for [URL="https://forums.alliedmods.net/showthread.php?t=262658"]splewis Retake[/URL]
@@ -7,10 +7,10 @@
 This weapon allocator simulates different kinds of rounds - [b]FULLBUY, FORCEBUY, PISTOL & (DEAGLE)[/b].
 
 These rounds will be set through two different modes. 
-Ascending rounds ([U]mywa_rounds_chance 1[/U]) - first [i]x[/i] rounds will be [B]PISTOL[/B], then [i]x[/i] [B]FORCEBUY[/B] rounds after that [i]x[/i] [B]FULLBUY[/B] rounds.
-Random rounds by chance ([U]mywa_rounds_chance 0[/U]) - It's a random chance to play [B]FULLBUY, FORCEBUY, PISTOL & DEAGLE[/B] rounds in no special order.
+- [B]Ascending rounds[/B] ([U]mywa_rounds_chance 1[/U]) - first [i]x[/i] rounds will be [B]PISTOL[/B], then [i]x[/i] [B]FORCEBUY[/B] rounds after that [i]x[/i] [B]FULLBUY[/B] rounds.
+- [B]Random rounds by chance[/B] ([U]mywa_rounds_chance 0[/U]) - It's a random chance to play [B]FULLBUY, FORCEBUY, PISTOL & DEAGLE[/B] rounds in no special order.
 
-DEAGLE rounds are only available on random rounds ([U]mywa_rounds_chance 0[/U]) & don't give grenades.
+[B]DEAGLE[/B] rounds are only available on random rounds ([U]mywa_rounds_chance 0[/U]) & don't give grenades.
 
 Players can choose their preferred weapons for these rounds through !gun menu.
 
@@ -18,7 +18,7 @@ The plugin will give equipment (grenades, armor & kit) in these rounds based on 
 
 
 
-Take a look through to config for a better understanding.
+Take a look at the configuration for a better understanding.
 
 [B][u]ConVars[/u][/B]
 [SPOILER]
@@ -255,15 +255,14 @@ Also big thanks to all sourcemod & metamod developers out there!
 [*][URL="https://github.com/splewis/csgo-retakes/blob/master/scripting/include/retakes.inc"]retakes.inc[/URL]
 [/LIST]
 
+
 [B][U]Installation[/U][/B]
 [QUOTE][LIST=1]
-[*]put [u].smx[/u] in your [B]addons/sourcemod/plugins[/B] directory
-
-[*]restart server / change map
-
-[*].cfg file will be generated at [B]cfgs/sourcemod/retakes/[/B]
-
-[*]Have fun! Give feedback!
+[*]MyWeaponAllocator.smx -> addons/sourcemod/plugins/
+[*]MyWeaponAllocator.phrases.txt -> addons/sourcemod/translations/
+[*]MyWeaponAllocator.sp -> addons/sourcemod/scripting/ (optional)
+[*]Config file sourcemod/retakes/MyWeaponAllocator.cfg will be generated after first startup
+[*]Have Fun! Give feedback!
 [/LIST]
 [/QUOTE]
 

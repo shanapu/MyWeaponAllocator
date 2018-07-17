@@ -1,6 +1,6 @@
 MyWeaponAllocator
 
-MyWeaponAllocator for splewis Retake - https://forums.alliedmods.net/showthread.php?t=262658
+MyWeaponAllocator for splewis retakes - https://forums.alliedmods.net/showthread.php?t=262658
 
 This weapon allocator simulates different kinds of rounds - FULLBUY, FORCEBUY, PISTOL, (DEAGLE).
 These rounds will be set through two different modes. 
@@ -12,11 +12,11 @@ Player can choose their preferred weapons for these rounds through !gun menu.
 
 The plugin will give equipments (grenades, armor & kit) in these rounds based of the configured money, mode & max amount of grenades.
 
-Take a look through to config for a better understanding.
+Take a look at the configuration for a better understanding.
 
 
 ```
-// 0 - disabled, 1 - enable weapons menu
+// 0 - disabled, 1 - enable plugin
 // -
 // Default: "1"
 // Minimum: "0.000000"

@@ -109,7 +109,7 @@ public Plugin myinfo =
 {
 	name = "MyWeaponAllocator",
 	author = "shanapu",
-	description = "Retake weapon allocator",
+	description = "Retakes weapon allocator",
 	version = "2.0",
 	url = "https://github.com/shanapu/MyWeaponAllocator"
 };
@@ -131,7 +131,7 @@ public void OnPluginStart()
 	AutoExecConfig_SetFile("MyWeaponAllocator", "sourcemod/retakes");
 	AutoExecConfig_SetCreateFile(true);
 
-	gc_bPlugin = AutoExecConfig_CreateConVar("mywa_enable", "1", "0 - disabled, 1 - enable weapons menu", _, true, 0.0, true, 1.0);
+	gc_bPlugin = AutoExecConfig_CreateConVar("mywa_enable", "1", "0 - disabled, 1 - enable plugin", _, true, 0.0, true, 1.0);
 
 	gc_iMode = AutoExecConfig_CreateConVar("mywa_rounds_chance", "1", "0 - chance / 1- rounds", _, true, 0.0, true, 1.0);
 
