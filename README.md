@@ -1,0 +1,1 @@
+MyWeaponAllocator
