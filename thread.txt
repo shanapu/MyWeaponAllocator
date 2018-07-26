@@ -1,7 +1,7 @@
 [URL="https://forums.alliedmods.net/showthread.php?p=2604368&nojs=1#goto_threadrating"]Rate Thread		 [IMG]https://forums.alliedmods.net/images/misc/menu_open.svg[/IMG][IMG]https://forums.alliedmods.net/images/rating/rating_5.svg[/IMG][/URL]
 
 
-[B][SIZE="5"]MyWeaponAllocator[/SIZE][/B] for [URL="https://forums.alliedmods.net/showthread.php?t=262658"]splewis Retake[/URL]
+[B][SIZE="5"]MyWeaponAllocator[/SIZE][/B] for [URL="https://forums.alliedmods.net/showthread.php?t=262658"]splewis Retakes[/URL]
 
 
 This weapon allocator simulates different kinds of rounds - [b]FULLBUY, FORCEBUY, PISTOL & (DEAGLE)[/b].
@@ -23,7 +23,7 @@ Take a look at the configuration for a better understanding.
 [B][u]ConVars[/u][/B]
 [SPOILER]
 [code]
-// 0 - disabled, 1 - enable weapons menu
+// 0 - disabled, 1 - enable plugin
 // -
 // Default: "1"
 // Minimum: "0.000000"
@@ -234,11 +234,15 @@ mywa_bombsite "1"
 
 [U][B]Required plugins[/B][/U]
 [LIST]
-[*][URL="https://forums.alliedmods.net/showthread.php?t=262658"]Retake[/URL] by splewis
+[*][URL="https://forums.alliedmods.net/showthread.php?t=262658"]Retakes[/URL] by splewis
 [/LIST]
 
 [U][B]ChangeLog[/B][/U]
 [QUOTE]
+v2.1
+[LIST]
+[*]fixed error, thx ramonberrutti
+[/LIST]
 v2.0
 [LIST]
 [*]public release
@@ -247,7 +251,7 @@ v2.0
 
 [U][B]Credits[/B][/U] :bacon!:
 [B]Leeter & xooni for the idea, commissioning & testing![/B] Thx for share!
-Big thanks @splewis for his great work on retake!
+Big thanks @splewis for his great work on retakes!
 Also big thanks to all sourcemod & metamod developers out there!
 
 [B][U]Include file for compile[/U][/B]

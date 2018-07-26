@@ -1,13 +1,16 @@
+// Exported from SourceMod Translator
+// Date: 2018-07-26 13:18:58 UTC
+// Language: English (en)
+// 
+// To view other translations for this plugin, please visit:
+// http://translator.mitchdempsey.com/sourcemod_plugins/311
+//
 "Phrases"
 {
+
 	"Bomb planted on Bombsite"
 	{
 		"en"		"Bomb planted on bombsite:"
-	}
-
-	"on Bombsite"
-	{
-		"en"		"on bombsite:"
 	}
 
 	"Pistol Round"
@@ -28,11 +31,6 @@
 	"Deagle Round"
 	{
 		"en"		"Deagle Round"
-	}
-
-	"Round Type"
-	{
-		"en"		"Round Type:"
 	}
 
 	"Now is"
@@ -90,18 +88,29 @@
 		"en"		"Yes"
 	}
 
-	"You need to be in a team"
-	{
-		"en"		"You have to be on a team to choose your weapons."
-	}
-
 	"No"
 	{
 		"en"		"No"
+	}
+
+	"on Bombsite"
+	{
+		"en"		"on bombsite:"
 	}
 
 	"Weapons next round"
 	{
 		"en"		"You'll get your new choice of weapons in the next round."
 	}
+
+	"Round Type"
+	{
+		"en"		"Round Type:"
+	}
+
+	"You need to be in a team"
+	{
+		"en"		"You have to be on a team to choose your weapons."
+	}
+
 }
