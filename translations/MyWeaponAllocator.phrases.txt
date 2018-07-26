@@ -3,105 +3,126 @@
 	"Bomb planted on Bombsite"
 	{
 		"en"		"Bomb planted on bombsite:"
+		"fr"		"Bombe plantée sur le bombsite:"
 	}
 
 	"on Bombsite"
 	{
 		"en"		"on bombsite:"
+		"fr"		"sur le bombsite:"
 	}
 
 	"Pistol Round"
 	{
 		"en"		"Pistol Round"
+		"fr"		"Manche Pistolet"
 	}
 
 	"Force Buy Round"
 	{
 		"en"		"Force Buy Round"
+		"fr"		"Manche Force Buy"
 	}
 
 	"Full Buy Round"
 	{
 		"en"		"Full Buy Round"
+		"fr"		"Manche Full Buy"
 	}
 
 	"Deagle Round"
 	{
 		"en"		"Deagle Round"
+		"fr"		"Manche Deagle"
 	}
 
 	"Round Type"
 	{
 		"en"		"Round Type:"
+		"fr"		"Type de manche:"
 	}
 
 	"Now is"
 	{
 		"en"		"Now is:"
+		"fr"		"Maintenant c'est"
 	}
 
 	"A-A-A"
 	{
 		"en"		"A-A-A"
+		"fr"		"A-A-A"
 	}
 
 	"B-B-B"
 	{
 		"en"		"B-B-B"
+		"fr"		"B-B-B"
 	}
 
 	"Select a CT rifle"
 	{
 		"en"		"Select a CT rifle:"
+		"fr"		"Sélectionnez un fusil CT:"
 	}
 
 	"Select a T rifle"
 	{
 		"en"		"Select a T rifle:"
+		"fr"		"Sélectionnez un fusil T:"
 	}
 
 	"Select a CT pistol"
 	{
 		"en"		"Select a CT pistol:"
+		"fr"		"Sélectionnez un pistolet CT:"
 	}
 
 	"Select a T pistol"
 	{
 		"en"		"Select a T pistol:"
+		"fr"		"Sélectionnez un pistolet T:"
 	}
 
 	"Select a CT SMG"
 	{
 		"en"		"Select a CT SMG:"
+		"fr"		"Sélectionnez un SMG CT:"
 	}
 
 	"Select a T SMG"
 	{
 		"en"		"Select a T SMG:"
+		"fr"		"Sélectionnez un SMG T:"
 	}
 
 	"Allow Sniper"
 	{
 		"en"		"Allow yourself to receive: \nSSG 08 in Force Buy and \nAWP in Full Buy?"
+		"fr"		"Permettez-vous de recevoir: \nSSG 08 dans Force Buy et \nAWP dans Full Buy?"
 	}
 
 	"Yes"
 	{
 		"en"		"Yes"
+		"fr"		"Oui"
 	}
 
 	"You need to be in a team"
 	{
 		"en"		"You have to be on a team to choose your weapons."
+		"fr"		"Vous devez être dans une équipe pour choisir vos armes."
 	}
 
 	"No"
 	{
 		"en"		"No"
+		"fr"		"Non"
 	}
 
 	"Weapons next round"
 	{
 		"en"		"You'll get your new choice of weapons in the next round."
+		"fr"		"Vous aurez votre nouveau choix d'armes a la prochaine manche."
 	}
 }
