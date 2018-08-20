@@ -110,7 +110,7 @@ public Plugin myinfo =
 	name = "MyWeaponAllocator",
 	author = "shanapu",
 	description = "Retakes weapon allocator",
-	version = "2.1",
+	version = "2.2",
 	url = "https://github.com/shanapu/MyWeaponAllocator"
 };
 
@@ -578,6 +578,7 @@ void Menu_SMG(int client)
 	menu.AddItem("weapon_bizon", "PP-Bizon");
 	menu.AddItem("weapon_p90", "P90");
 	menu.AddItem("weapon_mp7", "MP7");
+	menu.AddItem("weapon_mp5sd", "MP5-SD");
 
 	if (g_bIsCT[client])
 	{
@@ -1174,6 +1175,9 @@ int GetWeaponPrice(char[] weapon)
 
 	else if (StrEqual(weapon, "weapon_ump45"))
 		return 1200;
+
+	else if (StrEqual(weapon, "weapon_mp5sd"))
+		return 1500;
 
 	else if (StrEqual(weapon, "weapon_mp7"))
 		return 1700;
