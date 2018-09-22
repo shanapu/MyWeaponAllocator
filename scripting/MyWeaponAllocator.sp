@@ -33,6 +33,7 @@
 #define FORCE_ROUND 2
 #define PISTOL_ROUND 3
 #define DEAGLE_ROUND 4
+#define RIFLE_ROUND 5
 
 bool g_bIsLateLoad = false;
 bool g_bSniper[MAXPLAYERS + 1] = false;
@@ -133,7 +134,7 @@ public void OnPluginStart()
 
 	gc_bPlugin = AutoExecConfig_CreateConVar("mywa_enable", "1", "0 - disabled, 1 - enable plugin", _, true, 0.0, true, 1.0);
 
-	gc_iMode = AutoExecConfig_CreateConVar("mywa_rounds_chance", "1", "0 - chance / 1- rounds", _, true, 0.0, true, 1.0);
+	gc_iMode = AutoExecConfig_CreateConVar("mywa_rounds_chance", "1", "0 - chance / 1 - rounds / 2 - rifle only / 3 - force only / 4 - pistol only", _, true, 0.0, true, 4.0);
 
 	gc_iPistolChance = AutoExecConfig_CreateConVar("mywa_chance_pistol", "20", "percent chance a round will be a pistol round (mywa_rounds_chance 0)", _, true, 0.0);
 	gc_iForceChance = AutoExecConfig_CreateConVar("mywa_chance_force", "30", "percent chance a round will be a force round (mywa_rounds_chance 0)", _, true, 0.0);
@@ -240,31 +241,37 @@ public void OnClientCookiesCached(int client)
 	{
 		Format (g_sPrimary_CT[client], sizeof(g_sPrimary_CT), sBuffer);
 	}
+
 	GetClientCookie(client, g_hSecondary_CT, sBuffer, sizeof(sBuffer));
 	if (strlen(sBuffer) > 5)
 	{
 		Format (g_sSecondary_CT[client], sizeof(g_sSecondary_CT), sBuffer);
 	}
+
 	GetClientCookie(client, g_hSMG_CT, sBuffer, sizeof(sBuffer));
 	if (strlen(sBuffer) > 5)
 	{
 		Format (g_sSMG_CT[client], sizeof(g_sSMG_CT), sBuffer);
 	}
+
 	GetClientCookie(client, g_hPrimary_T, sBuffer, sizeof(sBuffer));
 	if (strlen(sBuffer) > 5)
 	{
 		Format (g_sPrimary_T[client], sizeof(g_sPrimary_T), sBuffer);
 	}
+
 	GetClientCookie(client, g_hSecondary_T, sBuffer, sizeof(sBuffer));
 	if (strlen(sBuffer) > 5)
 	{
 		Format (g_sSecondary_T[client], sizeof(g_sSecondary_T), sBuffer);
 	}
+
 	GetClientCookie(client, g_hSMG_T, sBuffer, sizeof(sBuffer));
 	if (strlen(sBuffer) > 5)
 	{
 		Format (g_sSMG_T[client], sizeof(g_sSMG_T), sBuffer);
 	}
+
 	GetClientCookie(client, g_hSniper, sBuffer, sizeof(sBuffer));
 	if (sBuffer[0] != '\0')
 	{
@@ -314,7 +321,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 	{
 		if (strcmp(args[0], sCommands[i], false) == 0)
 		{
-			Menu_Primary(client);
+			Menus_Weapons(client);
 
 			break;
 		}
@@ -331,7 +338,7 @@ public void Retakes_OnGunsCommand(int client)
 	if (!IsValidClient(client))
 		return;
 
-	Menu_Primary(client);
+	Menus_Weapons(client);
 }
 
 public Action Command_Weapons(int client, int args)
@@ -342,14 +349,33 @@ public Action Command_Weapons(int client, int args)
 	if (!IsValidClient(client))
 		return Plugin_Handled;
 
-	Menu_Primary(client);
+	Menus_Weapons(client);
 
 	return Plugin_Handled;
+}
+
+void Menus_Weapons(int client)
+{
+	if (gc_iMode.IntValue < 3)
+	{
+		Menu_Primary(client);
+	}
+	else if (gc_iMode.IntValue == 3)
+	{
+		Menu_SMG(client);
+	}
+	else if (gc_iMode.IntValue == 4)
+	{
+		Menu_Secondary(client);
+	}
 }
 
 public Action Command_AWP(int client, int args)
 {
 	if (!gc_bPlugin.BoolValue)
+		return Plugin_Handled;
+
+	if (gc_iMode.IntValue > 1)
 		return Plugin_Handled;
 
 	if (!IsValidClient(client))
@@ -373,29 +399,45 @@ public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 	if (!gc_bPlugin.BoolValue || !Retakes_Live())
 		return;
 
-	if (gc_iMode.BoolValue)
+	if (gc_iMode.IntValue == 1)
 	{
 		if (g_iRounds_Pistol < gc_iPistolRounds.IntValue)
 		{
 			g_iRounds_Pistol++;
 
-			g_iRoundType = PISTOL_ROUND;
-			Format(g_sRoundType, sizeof(g_sRoundType), "%t", "Pistol Round");
+			SetRoundType(PISTOL_ROUND);
 		}
 		else if (g_iRounds_Force < gc_iForceRounds.IntValue)
 		{
 			g_iRounds_Force++;
 
-			g_iRoundType = FORCE_ROUND;
-			Format(g_sRoundType, sizeof(g_sRoundType), "%t", "Force Buy Round");
+			SetRoundType(FORCE_ROUND);
 		}
 		else
 		{
-			g_iRoundType = FULL_ROUND;
-			Format(g_sRoundType, sizeof(g_sRoundType), "%t", "Full Buy Round");
+			SetRoundType(FULL_ROUND);
 		}
 
-		EquipAllPlayerWeapon();
+		return;
+	}
+
+	if (gc_iMode.IntValue == 2)
+	{
+		SetRoundType(RIFLE_ROUND);
+
+		return;
+	}
+
+	if (gc_iMode.IntValue == 3)
+	{
+		SetRoundType(FORCE_ROUND);
+
+		return;
+	}
+
+	if (gc_iMode.IntValue == 4)
+	{
+		SetRoundType(PISTOL_ROUND);
 
 		return;
 	}
@@ -403,10 +445,7 @@ public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 	int iRound = GetRandomInt(1, 100);
 	if (iRound <= gc_iPistolChance.IntValue)
 	{
-		g_iRoundType = PISTOL_ROUND;
-		Format(g_sRoundType, sizeof(g_sRoundType), "%t", "Pistol Round");
-
-		EquipAllPlayerWeapon();
+		SetRoundType(PISTOL_ROUND);
 
 		return;
 	}
@@ -414,10 +453,7 @@ public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 	iRound = GetRandomInt(1, 100);
 	if (iRound <= gc_iDeagleChance.IntValue)
 	{
-		g_iRoundType = DEAGLE_ROUND;
-		Format(g_sRoundType, sizeof(g_sRoundType), "%t", "Deagle Round");
-
-		EquipAllPlayerWeapon();
+		SetRoundType(DEAGLE_ROUND);
 
 		return;
 	}
@@ -425,17 +461,45 @@ public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 	iRound = GetRandomInt(1, 100);
 	if (iRound <= gc_iForceChance.IntValue)
 	{
+		SetRoundType(FORCE_ROUND);
+	}
+	else
+	{
+		SetRoundType(FULL_ROUND);
+	}
+}
+
+void SetRoundType(int type)
+{
+	if (type == FORCE_ROUND)
+	{
 		g_iRoundType = FORCE_ROUND;
 		Format(g_sRoundType, sizeof(g_sRoundType), "%t", "Force Buy Round");
 	}
-	else
+	else if (type == FULL_ROUND)
 	{
 		g_iRoundType = FULL_ROUND;
 		Format(g_sRoundType, sizeof(g_sRoundType), "%t", "Full Buy Round");
 	}
+	else if (type == PISTOL_ROUND)
+	{
+		g_iRoundType = PISTOL_ROUND;
+		Format(g_sRoundType, sizeof(g_sRoundType), "%t", "Pistol Round");
+	}
+	else if (type == DEAGLE_ROUND)
+	{
+		g_iRoundType = DEAGLE_ROUND;
+		Format(g_sRoundType, sizeof(g_sRoundType), "%t", "Deagle Round");
+	}
+	else if (type == RIFLE_ROUND)
+	{
+		g_iRoundType = RIFLE_ROUND;
+		Format(g_sRoundType, sizeof(g_sRoundType), "%t", "Rifle Round");
+	}
 
 	EquipAllPlayerWeapon();
 }
+
 
 void EquipAllPlayerWeapon()
 {
@@ -632,7 +696,14 @@ public int Handler_Primary(Menu menu, MenuAction action, int client, int selecti
 			Format (g_sPrimary_T[client], sizeof(g_sPrimary_T), sBuffer);
 		}
 
-		Menu_Secondary(client);
+		if (gc_iMode.IntValue < 2)
+		{
+			Menu_Secondary(client);
+		}
+		else
+		{
+			Retakes_Message(client, "%t", "Weapons next round");
+		}
 	}
 }
 
@@ -653,7 +724,14 @@ public int Handler_Secondary(Menu menu, MenuAction action, int client, int selec
 			Format (g_sSecondary_T[client], sizeof(g_sSecondary_T), sBuffer);
 		}
 
-		Menu_SMG(client);
+		if (gc_iMode.IntValue < 2 || gc_iMode.IntValue == 3)
+		{
+			Menu_SMG(client);
+		}
+		else
+		{
+			Retakes_Message(client, "%t", "Weapons next round");
+		}
 	}
 }
 
@@ -669,6 +747,12 @@ public int Handler_SMG(Menu menu, MenuAction action, int client, int selection)
 		{
 			Format (g_sSMG_CT[client], sizeof(g_sSMG_CT), sBuffer);
 
+			if (gc_iMode.IntValue > 1)
+			{
+				Retakes_Message(client, "%t", "Weapons next round");
+				return;
+			}
+
 			if (gc_iAWP_CT.BoolValue || gc_iScout_CT.BoolValue)
 			{
 				Menu_AWP(client);
@@ -677,6 +761,12 @@ public int Handler_SMG(Menu menu, MenuAction action, int client, int selection)
 		else if(!g_bIsCT[client])
 		{
 			Format (g_sSMG_T[client], sizeof(g_sSMG_T), sBuffer);
+
+			if (gc_iMode.IntValue > 1)
+			{
+				Retakes_Message(client, "%t", "Weapons next round");
+				return;
+			}
 
 			if (gc_iAWP_T.BoolValue || gc_iScout_T.BoolValue)
 			{
@@ -793,6 +883,21 @@ void EquipWeapons(int client)
 		{
 			GivePlayerItem(client, g_sSecondary_T[client]);
 			iMoney -= GetWeaponPrice(g_sSecondary_T[client]);
+		}
+	}
+	else if (g_iRoundType == RIFLE_ROUND)
+	{
+		iMoney = gc_iFullMoney.IntValue;
+
+		if (GetClientTeam(client) == CS_TEAM_CT)
+		{
+			GivePlayerItem(client, g_sPrimary_CT[client]);
+			iMoney -= GetWeaponPrice(g_sPrimary_CT[client]);
+		}
+		else if (GetClientTeam(client) == CS_TEAM_T)
+		{
+			GivePlayerItem(client, g_sPrimary_T[client]);
+			iMoney -= GetWeaponPrice(g_sPrimary_T[client]);
 		}
 	}
 	else if (g_iRoundType == FORCE_ROUND)
