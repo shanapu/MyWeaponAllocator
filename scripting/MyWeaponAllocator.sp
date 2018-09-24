@@ -354,22 +354,6 @@ public Action Command_Weapons(int client, int args)
 	return Plugin_Handled;
 }
 
-void Menus_Weapons(int client)
-{
-	if (gc_iMode.IntValue < 3)
-	{
-		Menu_Primary(client);
-	}
-	else if (gc_iMode.IntValue == 3)
-	{
-		Menu_SMG(client);
-	}
-	else if (gc_iMode.IntValue == 4)
-	{
-		Menu_Secondary(client);
-	}
-}
-
 public Action Command_AWP(int client, int args)
 {
 	if (!gc_bPlugin.BoolValue)
@@ -560,32 +544,56 @@ public Action Timer_ShowInfo(Handle timer)
 	}
 }
 
-void Menu_Primary(int client)
+void Menus_Weapons(int client)
 {
-	char sBuffer[255];
-	Menu menu = new Menu(Handler_Primary);
-
 	if (GetClientTeam(client) == CS_TEAM_CT)
 	{
-		Format(sBuffer, sizeof(sBuffer), "%t\n", "Select a CT rifle");
-		menu.AddItem("weapon_m4a1", "M4A1");
-		menu.AddItem("weapon_m4a1_silencer", "M4A1-S");
-		menu.AddItem("weapon_famas", "FAMAS");
-		menu.AddItem("weapon_aug", "AUG");
 		g_bIsCT[client] = true;
 	}
 	else if (GetClientTeam(client) == CS_TEAM_T)
 	{
-		Format(sBuffer, sizeof(sBuffer), "%t\n", "Select a T rifle");
-		menu.AddItem("weapon_ak47", "AK-47");
-		menu.AddItem("weapon_galilar", "Galil AR");
-		menu.AddItem("weapon_sg556", "SG 553");
 		g_bIsCT[client] = false;
 	}
 	else
 	{
 		Format(sBuffer, sizeof(sBuffer), "%t", "You need to be in a team");
 		Retakes_Message(client, sBuffer);
+		return;
+	}
+
+	if (gc_iMode.IntValue < 3)
+	{
+		Menu_Primary(client);
+	}
+	else if (gc_iMode.IntValue == 3)
+	{
+		Menu_SMG(client);
+	}
+	else if (gc_iMode.IntValue == 4)
+	{
+		Menu_Secondary(client);
+	}
+}
+
+void Menu_Primary(int client)
+{
+	char sBuffer[255];
+	Menu menu = new Menu(Handler_Primary);
+
+	if (g_bIsCT[client])
+	{
+		Format(sBuffer, sizeof(sBuffer), "%t\n", "Select a CT rifle");
+		menu.AddItem("weapon_m4a1", "M4A1");
+		menu.AddItem("weapon_m4a1_silencer", "M4A1-S");
+		menu.AddItem("weapon_famas", "FAMAS");
+		menu.AddItem("weapon_aug", "AUG");
+	}
+	else if (!g_bIsCT[client])
+	{
+		Format(sBuffer, sizeof(sBuffer), "%t\n", "Select a T rifle");
+		menu.AddItem("weapon_ak47", "AK-47");
+		menu.AddItem("weapon_galilar", "Galil AR");
+		menu.AddItem("weapon_sg556", "SG 553");
 	}
 
 	menu.SetTitle(sBuffer);
@@ -616,7 +624,7 @@ void Menu_Secondary(int client)
 
 	if (gc_bDeagle.BoolValue)
 	{
-	menu.AddItem("weapon_deagle", "Desert Eagle");
+		menu.AddItem("weapon_deagle", "Desert Eagle");
 	}
 
 	if (gc_bRevolver.BoolValue)
