@@ -556,6 +556,7 @@ void Menus_Weapons(int client)
 	}
 	else
 	{
+		char sBuffer[128];
 		Format(sBuffer, sizeof(sBuffer), "%t", "You need to be in a team");
 		Retakes_Message(client, sBuffer);
 		return;
