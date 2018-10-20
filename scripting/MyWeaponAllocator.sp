@@ -111,7 +111,7 @@ public Plugin myinfo =
 	name = "MyWeaponAllocator",
 	author = "shanapu",
 	description = "Retakes weapon allocator",
-	version = "2.2-serverOnly",
+	version = "2.2.dev",
 	url = "https://github.com/shanapu/MyWeaponAllocator"
 };
 
@@ -145,7 +145,7 @@ public void OnPluginStart()
 
 	gc_iFullMoney = AutoExecConfig_CreateConVar("mywa_money_full", "16000", "money for weapons and equipment on fullbuy round", _, true, 0.0);
 	gc_iPistolMoney = AutoExecConfig_CreateConVar("mywa_money_pistol", "800", "money for weapons and equipment on pistol round", _, true, 0.0);
-	gc_iForceMoney = AutoExecConfig_CreateConVar("mywa_money_force", "2400", "money for weapons and equipment on forcebuy round", _, true, 0.0);
+	gc_iForceMoney = AutoExecConfig_CreateConVar("mywa_money_force", "2700", "money for weapons and equipment on forcebuy round", _, true, 0.0); //https://github.com/shanapu/MyWeaponAllocator/issues/5
 
 	gc_iAWP_MinT = AutoExecConfig_CreateConVar("mywa_awp_min_t", "3", "min number of player in terrorist team before AWP is available for T", _, true, 1.0);
 	gc_iScout_MinT = AutoExecConfig_CreateConVar("mywa_scout_min_t", "2", "min number of player in terrorist team before scout is available for T", _, true, 1.0);
@@ -181,6 +181,7 @@ public void OnPluginStart()
 
 	HookEvent("round_start", Event_RoundStart, EventHookMode_Pre);
 	HookEvent("bomb_planted", Event_BombPlanted, EventHookMode_Post);
+	HookEvent("begin_new_match", Event_BeginNewMatch);
 
 	g_hPrimary_CT = RegClientCookie("MyWA - Primary CT", "", CookieAccess_Private);
 	g_hSecondary_CT = RegClientCookie("MyWA - Secondary CT", "", CookieAccess_Private);
@@ -376,6 +377,12 @@ public void Event_BombPlanted(Event event, const char[] name, bool dontBroadcast
 		return;
 
 	PrintCenterTextAll("<font face='Arial' size='20'>%t </font>\n\t<font face='Arial' color='#00FF00' size='30'><b>%s</b></font></font>", "Bomb planted on Bombsite", g_sBombSite);
+}
+
+public void Event_BeginNewMatch(Event event, const char[] name, bool dontBroadcast)
+{
+	g_iRounds_Pistol = 0;
+	g_iRounds_Force = 0;
 }
 
 public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
