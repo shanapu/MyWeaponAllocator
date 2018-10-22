@@ -1,5 +1,5 @@
 // Exported from SourceMod Translator
-// Date: 2018-07-26 13:18:58 UTC
+// Date: 2018-10-22 12:38:50 UTC
 // Language: French (fr)
 // 
 // To view other translations for this plugin, please visit:

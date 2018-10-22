@@ -181,7 +181,7 @@ public void OnPluginStart()
 
 	HookEvent("round_start", Event_RoundStart, EventHookMode_Pre);
 	HookEvent("bomb_planted", Event_BombPlanted, EventHookMode_Post);
-	HookEvent("begin_new_match", Event_BeginNewMatch);
+//	HookEvent("begin_new_match", Event_BeginNewMatch);
 
 	g_hPrimary_CT = RegClientCookie("MyWA - Primary CT", "", CookieAccess_Private);
 	g_hSecondary_CT = RegClientCookie("MyWA - Secondary CT", "", CookieAccess_Private);
@@ -208,6 +208,17 @@ public void OnPluginStart()
 
 		g_bIsLateLoad = false;
 	}
+
+	ConVar cRestartGame = FindConVar("mp_restartgame");
+	if (cRestartGame != INVALID_HANDLE)
+	{
+		HookConVarChange(cRestartGame, OnConVarChanged);
+	}
+}
+
+public void OnConVarChanged(ConVar convar, char[] oldValue, char[] newValue)
+{
+	OnMapEnd();
 }
 
 public void OnAllPluginsLoaded()
@@ -381,8 +392,7 @@ public void Event_BombPlanted(Event event, const char[] name, bool dontBroadcast
 
 public void Event_BeginNewMatch(Event event, const char[] name, bool dontBroadcast)
 {
-	g_iRounds_Pistol = 0;
-	g_iRounds_Force = 0;
+	OnMapEnd();
 }
 
 public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
