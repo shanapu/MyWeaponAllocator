@@ -144,7 +144,7 @@ public void OnPluginStart()
 
 	gc_iFullMoney = AutoExecConfig_CreateConVar("mywa_money_full", "16000", "money for weapons and equipment on fullbuy round", _, true, 0.0);
 	gc_iPistolMoney = AutoExecConfig_CreateConVar("mywa_money_pistol", "800", "money for weapons and equipment on pistol round", _, true, 0.0);
-	gc_iForceMoney = AutoExecConfig_CreateConVar("mywa_money_force", "2400", "money for weapons and equipment on forcebuy round", _, true, 0.0);
+	gc_iForceMoney = AutoExecConfig_CreateConVar("mywa_money_force", "2700", "money for weapons and equipment on forcebuy round", _, true, 0.0);
 
 	gc_iAWP_MinT = AutoExecConfig_CreateConVar("mywa_awp_min_t", "3", "min number of player in terrorist team before AWP is available for T", _, true, 1.0);
 	gc_iScout_MinT = AutoExecConfig_CreateConVar("mywa_scout_min_t", "2", "min number of player in terrorist team before scout is available for T", _, true, 1.0);

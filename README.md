@@ -74,9 +74,9 @@ mywa_money_pistol "800"
 
 // money for weapons and equipment on forcebuy round
 // -
-// Default: "2400"
+// Default: "2700"
 // Minimum: "0.000000"
-mywa_money_force "2400"
+mywa_money_force "2700"
 
 // min number of player in terrorist team before AWP is available for T
 // -
