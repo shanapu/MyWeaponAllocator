@@ -111,7 +111,7 @@ public Plugin myinfo =
 	name = "MyWeaponAllocator",
 	author = "shanapu",
 	description = "Retakes weapon allocator",
-	version = "2.2.dev",
+	version = "2.3",
 	url = "https://github.com/shanapu/MyWeaponAllocator"
 };
 
