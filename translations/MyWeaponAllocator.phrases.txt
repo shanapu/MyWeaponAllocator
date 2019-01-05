@@ -28,6 +28,11 @@
 		"en"		"Full Buy Round"
 	}
 
+	"Rifle Round"
+	{
+		"en"		"Rifle Only Round"
+	}
+
 	"Deagle Round"
 	{
 		"en"		"Deagle Round"
