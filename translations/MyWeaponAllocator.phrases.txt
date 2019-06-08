@@ -87,6 +87,11 @@
 	{
 		"en"		"Allow yourself to receive: \nSSG 08 in Force Buy and \nAWP in Full Buy?"
 	}
+	
+	"Allow Taser"
+	{
+		"en"		"Allow yourself to receive taser?"
+	}
 
 	"Yes"
 	{
