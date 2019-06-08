@@ -35,25 +35,25 @@ mywa_enable "1"
 // Default: "1"
 // Minimum: "0.000000"
 // Maximum: "4.000000"
-mywa_rounds_chance "0"
+mywa_rounds_chance "1"
 
 // percent chance a round will be a pistol round (mywa_rounds_chance 0)
 // -
 // Default: "20"
 // Minimum: "0.000000"
-mywa_chance_pistol "5"
+mywa_chance_pistol "20"
 
 // percent chance a round will be a force round (mywa_rounds_chance 0)
 // -
 // Default: "30"
 // Minimum: "0.000000"
-mywa_chance_force "10"
+mywa_chance_force "30"
 
 // percent chance a round will be a deagle round (mywa_rounds_chance 0)
 // -
 // Default: "5"
 // Minimum: "0.000000"
-mywa_chance_deagle "0"
+mywa_chance_deagle "5"
 
 // how many round will be pistol round (mywa_rounds_chance 1)
 // -
@@ -65,7 +65,7 @@ mywa_rounds_pistol "3"
 // -
 // Default: "4"
 // Minimum: "0.000000"
-mywa_rounds_force "2"
+mywa_rounds_force "4"
 
 // money for weapons and equipment on fullbuy round
 // -
@@ -238,7 +238,7 @@ mywa_defuser "1"
 // Default: "0"
 // Minimum: "0.000000"
 // Maximum: "1.000000"
-mywa_taser "1"
+mywa_taser "0"
 
 // 0 - disabled, 1 - enable deagle for pistol & fullbuy rounds
 // -
