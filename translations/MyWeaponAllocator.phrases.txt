@@ -93,6 +93,11 @@
 		"en"		"Allow yourself to receive taser?"
 	}
 
+	"Allow Xm1014"
+	{
+		"en"		"Allow yourself to receive xm1014?"
+	}
+
 	"Yes"
 	{
 		"en"		"Yes"
