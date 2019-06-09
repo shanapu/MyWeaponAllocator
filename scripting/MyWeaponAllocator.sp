@@ -1017,7 +1017,7 @@ void EquipWeapons(int client)
 		if (GetClientTeam(client) == CS_TEAM_CT)
 		{
 			int iRandom = GetRandomInt(1, 3);
-			if (iRandom != 1 && g_bTaser[client] && gc_iTaser_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT))
+			if (iRandom == 3 && g_bTaser[client] && gc_iTaser_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT))
 			{
 				if(g_iTaser_CT<gc_iTaser_CT.IntValue)
 				{
@@ -1041,7 +1041,7 @@ void EquipWeapons(int client)
 					iMoney -= GetWeaponPrice(g_sPrimary_CT[client]);
 				}
 			}
-			else if (iRandom != 1 && g_bXm1014[client] && gc_iXm1014_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT))
+			else if (iRandom == 2 && g_bXm1014[client] && gc_iXm1014_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT))
 			{
 				
 				if (g_iXm1014_CT < gc_iXm1014_CT.IntValue)
@@ -1068,7 +1068,7 @@ void EquipWeapons(int client)
 		else if (GetClientTeam(client) == CS_TEAM_T)
 		{
 			int iRandom = GetRandomInt(1, 3);
-			if (iRandom != 1 && g_bTaser[client] && gc_iTaser_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T))
+			if (iRandom == 3 && g_bTaser[client] && gc_iTaser_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T))
 			{
 				if(g_iTaser_T<gc_iTaser_T.IntValue)
 				{
@@ -1091,7 +1091,7 @@ void EquipWeapons(int client)
 					iMoney -= GetWeaponPrice(g_sPrimary_T[client]);
 				}
 			}
-			else if (iRandom != 1 && g_bXm1014[client] && gc_iXm1014_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T))
+			else if (iRandom == 2 && g_bXm1014[client] && gc_iXm1014_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T))
 			{
 				
 				if (g_iXm1014_T < gc_iXm1014_T.IntValue)
@@ -1123,7 +1123,7 @@ void EquipWeapons(int client)
 		if (GetClientTeam(client) == CS_TEAM_CT)
 		{
 			int iRandom = GetRandomInt(1, 3);
-			if (iRandom != 1 && g_bTaser[client] && gc_iTaser_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT))
+			if (iRandom == 3 && g_bTaser[client] && gc_iTaser_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT))
 			{
 				if(g_iTaser_CT<gc_iTaser_CT.IntValue)
 				{
@@ -1138,7 +1138,7 @@ void EquipWeapons(int client)
 		else if (GetClientTeam(client) == CS_TEAM_T)
 		{
 			int iRandom = GetRandomInt(1, 3);
-			if (iRandom != 1 && g_bTaser[client] && gc_iTaser_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T))
+			if (iRandom == 3 && g_bTaser[client] && gc_iTaser_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T))
 			{
 				if(g_iTaser_T<gc_iTaser_T.IntValue)
 				{
@@ -1158,7 +1158,7 @@ void EquipWeapons(int client)
 		if (GetClientTeam(client) == CS_TEAM_CT)
 		{
 			int iRandom = GetRandomInt(1, 3);
-			if (iRandom != 1 && g_bTaser[client] && gc_iTaser_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT))
+			if (iRandom == 3 && g_bTaser[client] && gc_iTaser_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT))
 			{
 				if(g_iTaser_CT<gc_iTaser_CT.IntValue)
 				{
@@ -1173,7 +1173,7 @@ void EquipWeapons(int client)
 		else if (GetClientTeam(client) == CS_TEAM_T)
 		{
 			int iRandom = GetRandomInt(1, 3);
-			if (iRandom != 1 && g_bTaser[client] && gc_iTaser_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T))
+			if (iRandom == 3 && g_bTaser[client] && gc_iTaser_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T))
 			{
 				if(g_iTaser_T<gc_iTaser_T.IntValue)
 				{
@@ -1193,7 +1193,7 @@ void EquipWeapons(int client)
 		if (GetClientTeam(client) == CS_TEAM_CT)
 		{
 			int iRandom = GetRandomInt(1, 3);
-			if (iRandom != 1 && g_bTaser[client] && gc_iTaser_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT))
+			if (iRandom == 3 && g_bTaser[client] && gc_iTaser_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT))
 			{
 				if(g_iTaser_CT<gc_iTaser_CT.IntValue)
 				{
@@ -1216,7 +1216,7 @@ void EquipWeapons(int client)
 					iMoney -= GetWeaponPrice(g_sSMG_CT[client]);
 				}
 			}
-			else if (iRandom != 1 && g_bXm1014[client] && gc_iXm1014_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT))
+			else if (iRandom == 2 && g_bXm1014[client] && gc_iXm1014_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT))
 			{
 				
 				if (g_iXm1014_CT < gc_iXm1014_CT.IntValue)
@@ -1249,7 +1249,7 @@ void EquipWeapons(int client)
 		else if (GetClientTeam(client) == CS_TEAM_T)
 		{
 			int iRandom = GetRandomInt(1, 3);
-			if (iRandom != 1 && g_bTaser[client] && gc_iTaser_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T))
+			if (iRandom == 3 && g_bTaser[client] && gc_iTaser_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T))
 			{
 				if(g_iTaser_T<gc_iTaser_T.IntValue)
 				{
@@ -1272,7 +1272,7 @@ void EquipWeapons(int client)
 					iMoney -= GetWeaponPrice(g_sSMG_T[client]);
 				}
 			}
-			else if (iRandom != 1 && g_bXm1014[client] && gc_iXm1014_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T))
+			else if (iRandom == 2 && g_bXm1014[client] && gc_iXm1014_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T))
 			{
 				
 				if (g_iXm1014_T < gc_iXm1014_T.IntValue)
