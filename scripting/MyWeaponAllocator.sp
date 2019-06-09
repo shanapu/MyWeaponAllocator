@@ -164,7 +164,7 @@ public void OnPluginStart()
 	gc_iTaser_MinT = AutoExecConfig_CreateConVar("mywa_taser_min_t", "2", "min number of player in terrorist team before taser is available for T", _, true, 1.0);
 	gc_iAWP_T = AutoExecConfig_CreateConVar("mywa_awp_t", "1", "max number of AWPs for terrorist team / 0 - no AWPs", _, true, 0.0);
 	gc_iScout_T = AutoExecConfig_CreateConVar("mywa_scout_t", "1", "max number of scouts for terrorist team in force rounds/ 0 - no scouts", _, true, 0.0);
-	gc_iTaser_T = AutoExecConfig_CreateConVar("mywa_taser_t", "1", "max number of tasers for terrorist team in force rounds/ 0 - no scouts", _, true, 0.0);
+	gc_iTaser_T = AutoExecConfig_CreateConVar("mywa_taser_t", "1", "max number of tasers for terrorist team/ 0 - no scouts", _, true, 0.0);
 	gc_iMolotov_T = AutoExecConfig_CreateConVar("mywa_molotov_t", "2", "max number of molotovs for terrorist team / 0 - no molotovs", _, true, 0.0);
 	gc_iSmoke_T = AutoExecConfig_CreateConVar("mywa_smoke_t", "2", "max number of smokegrenades for terrorist team / 0 - no smokegrenades", _, true, 0.0);
 	gc_iFlash_T = AutoExecConfig_CreateConVar("mywa_flash_t", "3", "max number of flashbangs for terrorist team / 0 - no flashbangs", _, true, 0.0);
@@ -175,7 +175,7 @@ public void OnPluginStart()
 	gc_iTaser_MinCT = AutoExecConfig_CreateConVar("mywa_taser_min_ct", "2", "min number of player in counter-terrorist team before taser is available for CT", _, true, 1.0);
 	gc_iAWP_CT = AutoExecConfig_CreateConVar("mywa_awp_ct", "1", "max number of AWPs for counter-terrorist team / 0 - no AWPs", _, true, 0.0);
 	gc_iScout_CT = AutoExecConfig_CreateConVar("mywa_scout_ct", "1", "max number of scouts for counter-terrorist team in force rounds/ 0 - no scouts", _, true, 0.0);
-	gc_iTaser_CT = AutoExecConfig_CreateConVar("mywa_taser_ct", "1", "max number of tasers for counter-terrorist team in force rounds/ 0 - no scouts", _, true, 0.0);
+	gc_iTaser_CT = AutoExecConfig_CreateConVar("mywa_taser_ct", "1", "max number of tasers for counter-terrorist team/ 0 - no scouts", _, true, 0.0);
 	gc_iMolotov_CT = AutoExecConfig_CreateConVar("mywa_molotov_ct", "2", "max number of molotovs for counter-terrorist team / 0 - no molotovs", _, true, 0.0);
 	gc_iSmoke_CT = AutoExecConfig_CreateConVar("mywa_smoke_ct", "2", "max number of smokegrenades for counter-terrorist team / 0 - no smokegrenades", _, true, 0.0);
 	gc_iFlash_CT = AutoExecConfig_CreateConVar("mywa_flash_ct", "3", "max number of flashbangs for counter-terrorist team / 0 - no flashbangs", _, true, 0.0);
