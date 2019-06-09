@@ -47,6 +47,7 @@ Handle g_hPrimary_T = null;
 Handle g_hSecondary_T = null;
 Handle g_hSMG_T = null;
 Handle g_hSniper = null;
+Handle g_hTaser = null;
 
 ConVar gc_bPlugin;
 ConVar gc_iMode;
@@ -86,6 +87,7 @@ ConVar gc_bDefuser;
 ConVar gc_bTaser;
 ConVar gc_bRevolver;
 ConVar gc_bDeagle;
+ConVar gc_bDeagleForce;
 ConVar gc_bP90;
 ConVar gc_bNova;
 ConVar gc_bXm1014;
@@ -189,6 +191,7 @@ public void OnPluginStart()
 	gc_bTaser = AutoExecConfig_CreateConVar("mywa_taser", "0", "0 - disabled, 1 - enable taser", _, true, 0.0, true, 1.0);
 
 	gc_bDeagle = AutoExecConfig_CreateConVar("mywa_deagle", "1", "0 - disabled, 1 - enable deagle for pistol & fullbuy rounds", _, true, 0.0, true, 1.0);
+	gc_bDeagleForce = AutoExecConfig_CreateConVar("mywa_deagleforce", "1", "0 - disabled, 1 - enable deagle for forcebuy rounds", _, true, 0.0, true, 1.0);
 	gc_bRevolver = AutoExecConfig_CreateConVar("mywa_revolver", "1", "0 - disabled, 1 - enable revolver for pistol & fullbuy rounds", _, true, 0.0, true, 1.0);
 	gc_bP90 = AutoExecConfig_CreateConVar("mywa_p90", "1", "0 - disabled, 1 - enable p90 for fullbuy rounds", _, true, 0.0, true, 1.0);
 	gc_bNova = AutoExecConfig_CreateConVar("mywa_nova", "1", "0 - disabled, 1 - enable nova for forcebuy & fullbuy rounds", _, true, 0.0, true, 1.0);
@@ -210,6 +213,7 @@ public void OnPluginStart()
 	g_hSecondary_T = RegClientCookie("MyWA - Secondary T", "", CookieAccess_Private);
 	g_hSMG_T = RegClientCookie("MyWA - SMG T", "", CookieAccess_Private);
 	g_hSniper = RegClientCookie("MyWA - Sniper", "", CookieAccess_Private);
+	g_hTaser = RegClientCookie("MyWA - Taser", "", CookieAccess_Private);
 
 	if (g_bIsLateLoad)
 	{
@@ -310,6 +314,12 @@ public void OnClientCookiesCached(int client)
 	{
 		g_bSniper[client] = view_as<bool>(StringToInt(sBuffer));
 	}
+	
+	GetClientCookie(client, g_hTaser, sBuffer, sizeof(sBuffer));
+	if (sBuffer[0] != '\0')
+	{
+		g_bTaser[client] = view_as<bool>(StringToInt(sBuffer));
+	}
 }
 
 public void OnPluginEnd()
@@ -335,6 +345,7 @@ public void OnClientDisconnect(int client)
 	SetClientCookie(client, g_hSecondary_T, g_sSecondary_T[client]);
 	SetClientCookie(client, g_hSMG_T, g_sSMG_T[client]);
 	SetClientCookie(client, g_hSniper, g_bSniper[client] ? "1" : "0");
+	SetClientCookie(client, g_hTaser, g_bTaser[client] ? "1" : "0");
 }
 
 public void OnMapEnd()
@@ -718,6 +729,8 @@ void Menu_SMG(int client)
 	menu.AddItem("weapon_p90", "P90");
 	menu.AddItem("weapon_mp7", "MP7");
 	menu.AddItem("weapon_mp5sd", "MP5-SD");
+	if (gc_bDeagleForce.BoolValue)
+		menu.AddItem("weapon_deagle","Deagle");
 	if (gc_bNova.BoolValue)
 		menu.AddItem("weapon_nova", "Nova");
 	if (gc_bXm1014.BoolValue)
