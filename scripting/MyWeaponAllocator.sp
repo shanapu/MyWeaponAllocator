@@ -39,6 +39,7 @@ bool g_bIsLateLoad = false;
 bool g_bSniper[MAXPLAYERS + 1] = false;
 bool g_bIsCT[MAXPLAYERS + 1] = false;
 bool g_bTaser[MAXPLAYERS + 1] = false;
+bool g_bXm1014[MAXPLAYERS + 1] = false;
 
 Handle g_hPrimary_CT = null;
 Handle g_hSecondary_CT = null;
@@ -48,6 +49,7 @@ Handle g_hSecondary_T = null;
 Handle g_hSMG_T = null;
 Handle g_hSniper = null;
 Handle g_hTaser = null;
+Handle g_hXm1014 = null;
 
 ConVar gc_bPlugin;
 ConVar gc_iMode;
@@ -70,12 +72,16 @@ ConVar gc_iScout_MinCT;
 ConVar gc_iScout_MinT;
 ConVar gc_iTaser_MinCT;
 ConVar gc_iTaser_MinT;
+ConVar gc_iXm1014_MinCT;
+ConVar gc_iXm1014_MinT;
 ConVar gc_iAWP_T;
 ConVar gc_iAWP_CT;
 ConVar gc_iScout_T;
 ConVar gc_iScout_CT;
 ConVar gc_iTaser_T;
 ConVar gc_iTaser_CT;
+ConVar gc_iXm1014_T;
+ConVar gc_iXm1014_CT;
 ConVar gc_iFullMoney;
 ConVar gc_iPistolMoney;
 ConVar gc_iForceMoney;
@@ -107,6 +113,8 @@ int g_iScout_CT = 0;
 int g_iScout_T = 0;
 int g_iTaser_CT = 0;
 int g_iTaser_T = 0;
+int g_iXm1014_CT = 0;
+int g_iXm1014_T = 0;
 int g_iRounds_Pistol = 0;
 int g_iRounds_Force = 0;
 
@@ -142,6 +150,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_weapon", Command_Weapons, "open the weapon menu");
 	RegConsoleCmd("sm_awp", Command_AWP, "open the AWP menu");
 	RegConsoleCmd("sm_taser", Command_Taser, "open the taser menu");
+	RegConsoleCmd("sm_auto", Command_AutoShotGun, "open the xm1014 menu");
 
 	AutoExecConfig_SetFile("MyWeaponAllocator", "sourcemod/retakes");
 	AutoExecConfig_SetCreateFile(true);
@@ -164,9 +173,11 @@ public void OnPluginStart()
 	gc_iAWP_MinT = AutoExecConfig_CreateConVar("mywa_awp_min_t", "3", "min number of player in terrorist team before AWP is available for T", _, true, 1.0);
 	gc_iScout_MinT = AutoExecConfig_CreateConVar("mywa_scout_min_t", "2", "min number of player in terrorist team before scout is available for T", _, true, 1.0);
 	gc_iTaser_MinT = AutoExecConfig_CreateConVar("mywa_taser_min_t", "2", "min number of player in terrorist team before taser is available for T", _, true, 1.0);
+	gc_iXm1014_MinT = AutoExecConfig_CreateConVar("mywa_xm1014_min_t", "2", "min number of player in terrorist team before Xm1014 is available for T", _, true, 1.0);
 	gc_iAWP_T = AutoExecConfig_CreateConVar("mywa_awp_t", "1", "max number of AWPs for terrorist team / 0 - no AWPs", _, true, 0.0);
 	gc_iScout_T = AutoExecConfig_CreateConVar("mywa_scout_t", "1", "max number of scouts for terrorist team in force rounds/ 0 - no scouts", _, true, 0.0);
-	gc_iTaser_T = AutoExecConfig_CreateConVar("mywa_taser_t", "1", "max number of tasers for terrorist team/ 0 - no scouts", _, true, 0.0);
+	gc_iTaser_T = AutoExecConfig_CreateConVar("mywa_taser_t", "1", "max number of tasers for terrorist team/ 0 - no tasers", _, true, 0.0);
+	gc_iXm1014_T = AutoExecConfig_CreateConVar("mywa_xm1014_t", "1", "max number of xm1014s for terrorist team/ 0 - no xm1014s", _, true, 0.0);
 	gc_iMolotov_T = AutoExecConfig_CreateConVar("mywa_molotov_t", "2", "max number of molotovs for terrorist team / 0 - no molotovs", _, true, 0.0);
 	gc_iSmoke_T = AutoExecConfig_CreateConVar("mywa_smoke_t", "2", "max number of smokegrenades for terrorist team / 0 - no smokegrenades", _, true, 0.0);
 	gc_iFlash_T = AutoExecConfig_CreateConVar("mywa_flash_t", "3", "max number of flashbangs for terrorist team / 0 - no flashbangs", _, true, 0.0);
@@ -175,9 +186,11 @@ public void OnPluginStart()
 	gc_iAWP_MinCT = AutoExecConfig_CreateConVar("mywa_awp_min_ct", "3", "min number of player in counter-terrorist team before AWP is available for CT", _, true, 1.0);
 	gc_iScout_MinCT = AutoExecConfig_CreateConVar("mywa_scout_min_ct", "2", "min number of player in counter-terrorist team before scout is available for CT", _, true, 1.0);
 	gc_iTaser_MinCT = AutoExecConfig_CreateConVar("mywa_taser_min_ct", "2", "min number of player in counter-terrorist team before taser is available for CT", _, true, 1.0);
+	gc_iXm1014_MinCT = AutoExecConfig_CreateConVar("mywa_xm1014_min_ct", "2", "min number of player in counter-terrorist team before Xm1014 is available for T", _, true, 1.0);
 	gc_iAWP_CT = AutoExecConfig_CreateConVar("mywa_awp_ct", "1", "max number of AWPs for counter-terrorist team / 0 - no AWPs", _, true, 0.0);
 	gc_iScout_CT = AutoExecConfig_CreateConVar("mywa_scout_ct", "1", "max number of scouts for counter-terrorist team in force rounds/ 0 - no scouts", _, true, 0.0);
 	gc_iTaser_CT = AutoExecConfig_CreateConVar("mywa_taser_ct", "1", "max number of tasers for counter-terrorist team/ 0 - no scouts", _, true, 0.0);
+	gc_iXm1014_CT = AutoExecConfig_CreateConVar("mywa_xm1014_ct", "1", "max number of xm1014s for counter-terrorist team/ 0 - no xm1014s", _, true, 0.0);
 	gc_iMolotov_CT = AutoExecConfig_CreateConVar("mywa_molotov_ct", "2", "max number of molotovs for counter-terrorist team / 0 - no molotovs", _, true, 0.0);
 	gc_iSmoke_CT = AutoExecConfig_CreateConVar("mywa_smoke_ct", "2", "max number of smokegrenades for counter-terrorist team / 0 - no smokegrenades", _, true, 0.0);
 	gc_iFlash_CT = AutoExecConfig_CreateConVar("mywa_flash_ct", "3", "max number of flashbangs for counter-terrorist team / 0 - no flashbangs", _, true, 0.0);
@@ -214,6 +227,7 @@ public void OnPluginStart()
 	g_hSMG_T = RegClientCookie("MyWA - SMG T", "", CookieAccess_Private);
 	g_hSniper = RegClientCookie("MyWA - Sniper", "", CookieAccess_Private);
 	g_hTaser = RegClientCookie("MyWA - Taser", "", CookieAccess_Private);
+	g_hXm1014 = RegClientCookie("MyWA - Xm1014", "", CookieAccess_Private);
 
 	if (g_bIsLateLoad)
 	{
@@ -264,6 +278,7 @@ public void OnClientConnected(int client)
 	Format(g_sSMG_T[client], sizeof(g_sSMG_T), "weapon_ump45");
 	g_bSniper[client] = false;
 	g_bTaser[client] = false;
+	g_bXm1014[client] = false;
 }
 
 public void OnClientCookiesCached(int client)
@@ -320,6 +335,12 @@ public void OnClientCookiesCached(int client)
 	{
 		g_bTaser[client] = view_as<bool>(StringToInt(sBuffer));
 	}
+	
+	GetClientCookie(client, g_hXm1014, sBuffer, sizeof(sBuffer));
+	if (sBuffer[0] != '\0')
+	{
+		g_bXm1014[client] = view_as<bool>(StringToInt(sBuffer));
+	}
 }
 
 public void OnPluginEnd()
@@ -346,6 +367,7 @@ public void OnClientDisconnect(int client)
 	SetClientCookie(client, g_hSMG_T, g_sSMG_T[client]);
 	SetClientCookie(client, g_hSniper, g_bSniper[client] ? "1" : "0");
 	SetClientCookie(client, g_hTaser, g_bTaser[client] ? "1" : "0");
+	SetClientCookie(client, g_hXm1014, g_bXm1014[client] ? "1" : "0");
 }
 
 public void OnMapEnd()
@@ -424,6 +446,20 @@ public Action Command_Taser(int client, int args)
 		return Plugin_Handled;
 
 	Menu_Taser(client);
+
+	return Plugin_Handled;
+}
+
+public Action Command_AutoShotGun(int client, int args)
+{
+	if (!gc_bPlugin.BoolValue)
+		return Plugin_Handled;
+	if (!gc_bXm1014.BoolValue)
+		return Plugin_Handled;
+	if (!IsValidClient(client))
+		return Plugin_Handled;
+
+	Menu_Xm1014(client);
 
 	return Plugin_Handled;
 }
@@ -564,6 +600,8 @@ void EquipAllPlayerWeapon()
 	g_iScout_T = 0;
 	g_iTaser_CT = 0;
 	g_iTaser_T = 0;
+	g_iXm1014_CT = 0;
+	g_iXm1014_T = 0;
 
 	ShowInfo();
 
@@ -645,7 +683,6 @@ void Menu_Primary(int client)
 {
 	char sBuffer[255];
 	Menu menu = new Menu(Handler_Primary);
-
 	if (g_bIsCT[client])
 	{
 		Format(sBuffer, sizeof(sBuffer), "%t\n", "Select a CT rifle");
@@ -653,12 +690,6 @@ void Menu_Primary(int client)
 		menu.AddItem("weapon_m4a1_silencer", "M4A1-S");
 		menu.AddItem("weapon_famas", "FAMAS");
 		menu.AddItem("weapon_aug", "AUG");
-		if (gc_bP90.BoolValue)
-			menu.AddItem("weapon_p90", "P90");
-		if (gc_bNova.BoolValue)
-			menu.AddItem("weapon_nova", "Nova");
-		if (gc_bXm1014.BoolValue)
-			menu.AddItem("weapon_xm1014", "Xm1014");
 	}
 	else if (!g_bIsCT[client])
 	{
@@ -666,14 +697,11 @@ void Menu_Primary(int client)
 		menu.AddItem("weapon_ak47", "AK-47");
 		menu.AddItem("weapon_galilar", "Galil AR");
 		menu.AddItem("weapon_sg556", "SG 553");
-		if (gc_bP90.BoolValue)
-			menu.AddItem("weapon_p90", "P90");
-		if (gc_bNova.BoolValue)
-			menu.AddItem("weapon_nova", "Nova");
-		if (gc_bXm1014.BoolValue)
-			menu.AddItem("weapon_xm1014", "Xm1014");
 	}
-
+	if (gc_bP90.BoolValue)
+		menu.AddItem("weapon_p90", "P90");
+	if (gc_bNova.BoolValue)
+		menu.AddItem("weapon_nova", "Nova");
 	menu.SetTitle(sBuffer);
 	menu.ExitButton = true;
 
@@ -733,8 +761,6 @@ void Menu_SMG(int client)
 		menu.AddItem("weapon_deagle","Deagle");
 	if (gc_bNova.BoolValue)
 		menu.AddItem("weapon_nova", "Nova");
-	if (gc_bXm1014.BoolValue)
-		menu.AddItem("weapon_xm1014", "Xm1014");
 	if (g_bIsCT[client])
 	{
 		Format(sBuffer, sizeof(sBuffer), "%t\n", "Select a CT SMG");
@@ -785,6 +811,23 @@ public void Menu_Taser(int client)
 	menu.SetTitle(sBuffer);
 	menu.Display(client, MENU_TIME_FOREVER);
 }
+
+public void Menu_Xm1014(int client)
+{
+	char sBuffer[255];
+	Menu menu = new Menu(Handler_Xm1014);
+	
+	Format(sBuffer, sizeof(sBuffer), "%t", "Yes");
+	menu.AddItem("1", sBuffer);
+	Format(sBuffer, sizeof(sBuffer), "%t", "No");
+	menu.AddItem("0", sBuffer);
+
+	Format(sBuffer, sizeof(sBuffer), "%t", "Allow Xm1014");
+
+	menu.SetTitle(sBuffer);
+	menu.Display(client, MENU_TIME_FOREVER);
+}
+
 
 public int Handler_Primary(Menu menu, MenuAction action, int client, int selection)
 {
@@ -894,13 +937,20 @@ public int Handler_AWP(Menu menu, MenuAction action, int client, int selection)
 		if (strcmp(sBuffer, "1") == 0)
 		{
 			g_bSniper[client] = true;
+			g_bXm1014[client] = false;
 		}
 		else
 		{
 			g_bSniper[client] = false;
 		}
-
-		Retakes_Message(client, "%t", "Weapons next round");
+		if (gc_bXm1014.BoolValue)
+		{
+			Menu_Xm1014(client);
+		}
+		else
+		{
+			Retakes_Message(client, "%t", "Weapons next round");
+		}
 	}
 }
 
@@ -919,6 +969,28 @@ public int Handler_Taser(Menu menu, MenuAction action, int client, int selection
 		else
 		{
 			g_bTaser[client] = false;
+		}
+
+		Retakes_Message(client, "%t", "Weapons next round");
+	}
+}
+
+public int Handler_Xm1014(Menu menu, MenuAction action, int client, int selection)
+{
+	if (action == MenuAction_Select)
+	{
+		char sBuffer[24];
+
+		menu.GetItem(selection, sBuffer, sizeof(sBuffer));
+
+		if (strcmp(sBuffer, "1") == 0)
+		{
+			g_bXm1014[client] = true;
+			g_bSniper[client] = false;
+		}
+		else
+		{
+			g_bXm1014[client] = false;
 		}
 
 		Retakes_Message(client, "%t", "Weapons next round");
@@ -971,6 +1043,21 @@ void EquipWeapons(int client)
 					iMoney -= GetWeaponPrice(g_sPrimary_CT[client]);
 				}
 			}
+			else if (iRandom == 1 && g_bXm1014[client] && gc_iXm1014_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT))
+			{
+				
+				if (g_iXm1014_CT < gc_iXm1014_CT.IntValue)
+				{
+					GivePlayerItem(client, "weapon_xm1014");
+					iMoney -= GetWeaponPrice("weapon_xm1014");
+					g_iXm1014_CT++;
+				}
+				else
+				{
+					GivePlayerItem(client, g_sPrimary_CT[client]);
+					iMoney -= GetWeaponPrice(g_sPrimary_CT[client]);
+				}
+			}
 			else
 			{
 				GivePlayerItem(client, g_sPrimary_CT[client]);
@@ -999,6 +1086,21 @@ void EquipWeapons(int client)
 					GivePlayerItem(client, "weapon_awp");
 					iMoney -= GetWeaponPrice("weapon_awp");
 					g_iAWP_T++;
+				}
+				else
+				{
+					GivePlayerItem(client, g_sPrimary_T[client]);
+					iMoney -= GetWeaponPrice(g_sPrimary_T[client]);
+				}
+			}
+			else if (iRandom == 1 && g_bXm1014[client] && gc_iXm1014_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T))
+			{
+				
+				if (g_iXm1014_T < gc_iXm1014_T.IntValue)
+				{
+					GivePlayerItem(client, "weapon_xm1014");
+					iMoney -= GetWeaponPrice("weapon_xm1014");
+					g_iXm1014_T++;
 				}
 				else
 				{
@@ -1116,17 +1218,32 @@ void EquipWeapons(int client)
 					iMoney -= GetWeaponPrice(g_sSMG_CT[client]);
 				}
 			}
+			else if (iRandom == 1 && g_bXm1014[client] && gc_iXm1014_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT))
+			{
+				
+				if (g_iXm1014_CT < gc_iXm1014_CT.IntValue)
+				{
+					GivePlayerItem(client, "weapon_xm1014");
+					iMoney -= GetWeaponPrice("weapon_xm1014");
+					g_iXm1014_CT++;
+				}
+				else
+				{
+					GivePlayerItem(client, g_sSMG_CT[client]);
+					iMoney -= GetWeaponPrice(g_sSMG_CT[client]);
+				}
+			}
 			else
 			{
 				GivePlayerItem(client, g_sSMG_CT[client]);
 				iMoney -= GetWeaponPrice(g_sSMG_CT[client]);
 			}
 
-			if (StrEqual(g_sSecondary_CT[client], "weapon_hkp2000"))
+			if (StrEqual(g_sSecondary_CT[client], "weapon_hkp2000")&&!StrEqual(g_sSMG_CT[client], "weapon_deagle"))
 			{
 				GivePlayerItem(client, "weapon_hkp2000");
 			}
-			else
+			else if (!StrEqual(g_sSMG_CT[client], "weapon_deagle"))
 			{
 				GivePlayerItem(client, "weapon_usp_silencer");
 			}
@@ -1157,12 +1274,27 @@ void EquipWeapons(int client)
 					iMoney -= GetWeaponPrice(g_sSMG_T[client]);
 				}
 			}
+			else if (iRandom == 1 && g_bXm1014[client] && gc_iXm1014_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T))
+			{
+				
+				if (g_iXm1014_T < gc_iXm1014_T.IntValue)
+				{
+					GivePlayerItem(client, "weapon_xm1014");
+					iMoney -= GetWeaponPrice("weapon_xm1014");
+					g_iXm1014_T++;
+				}
+				else
+				{
+					GivePlayerItem(client, g_sSMG_T[client]);
+					iMoney -= GetWeaponPrice(g_sSMG_T[client]);
+				}
+			}
 			else
 			{
 				GivePlayerItem(client, g_sSMG_T[client]);
 				iMoney -= GetWeaponPrice(g_sSMG_T[client]);
 			}
-
+			if (!StrEqual(g_sSMG_T[client], "weapon_deagle"))
 			GivePlayerItem(client, "weapon_glock");
 		}
 	}
