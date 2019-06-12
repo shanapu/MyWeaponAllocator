@@ -30,7 +30,7 @@
 
 	"Deagle Round"
 	{
-		"chi"		"沙漠之鹰局"
+		"chi"		"纯沙鹰局"
 	}
 
 	"Now is"
