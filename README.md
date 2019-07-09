@@ -14,8 +14,7 @@ Player can choose their preferred weapons for these rounds through `!gun` menu.
 
 The plugin will give equipments **(grenades, armor & kit)** in these rounds based of the configured money, mode & max amount of grenades.
 
-Take a look at the configuration for a better understanding.
-
+Take a look at the configuration for a better understanding:
 ```
 // 0 - disabled, 1 - enable plugin
 // -
