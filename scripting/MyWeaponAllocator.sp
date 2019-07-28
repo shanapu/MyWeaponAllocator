@@ -2,7 +2,9 @@
  * MyWeaponAllocator
  * by: shanapu
  * 
- * Copyright (C) 2016-2018 Thomas Schmidt (shanapu)
+ * Copyright (C) 2016-2019 Thomas Schmidt (shanapu)
+ * Contributer: LemonPAKA
+ 
  * Idea, commissioning & testing: Leeter & xooni
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -132,7 +134,7 @@ public Plugin myinfo =
 	name = "MyWeaponAllocator",
 	author = "shanapu",
 	description = "Retakes weapon allocator",
-	version = "2.3",
+	version = "2.4",
 	url = "https://github.com/shanapu/MyWeaponAllocator"
 };
 
