@@ -10,9 +10,15 @@ These rounds will be set through two different modes:
 
 DEAGLE rounds are only available on random rounds **(mywa_rounds_chance 0)** & don't give grenades.
 
+Take a look at the configuration for a better understanding.
+
 Player can choose their preferred weapons for these rounds through `!gun` menu.
 
 The plugin will give equipments **(grenades, armor & kit)** in these rounds based of the configured money, mode & max amount of grenades.
+
+# Credit :heart
+<a href="https://github.com/LemonPAKA/" target="_blank">LemonPAKA</a> added Simplified Chinese Translation and taser, nova and xm1014 with the lastest version price.
+
 
 Take a look at the configuration for a better understanding:
 ```
@@ -23,11 +29,11 @@ Take a look at the configuration for a better understanding:
 // Maximum: "1.000000"
 mywa_enable "1"
 
-// 0 - chance / 1- rounds
+// 0 - chance / 1 - rounds / 2 - rifle only / 3 - force only / 4 - pistol only
 // -
 // Default: "1"
 // Minimum: "0.000000"
-// Maximum: "1.000000"
+// Maximum: "4.000000"
 mywa_rounds_chance "1"
 
 // percent chance a round will be a pistol round (mywa_rounds_chance 0)
@@ -90,6 +96,18 @@ mywa_awp_min_t "3"
 // Minimum: "1.000000"
 mywa_scout_min_t "2"
 
+// min number of player in terrorist team before taser is available for T
+// -
+// Default: "2"
+// Minimum: "1.000000"
+mywa_taser_min_t "2"
+
+// min number of player in terrorist team before Xm1014 is available for T
+// -
+// Default: "2"
+// Minimum: "1.000000"
+mywa_xm1014_min_t "2"
+
 // max number of AWPs for terrorist team / 0 - no AWPs
 // -
 // Default: "1"
@@ -101,6 +119,18 @@ mywa_awp_t "1"
 // Default: "1"
 // Minimum: "0.000000"
 mywa_scout_t "1"
+
+// max number of tasers for terrorist team/ 0 - no tasers
+// -
+// Default: "1"
+// Minimum: "0.000000"
+mywa_taser_t "1"
+
+// max number of xm1014s for terrorist team/ 0 - no xm1014s
+// -
+// Default: "1"
+// Minimum: "0.000000"
+mywa_xm1014_t "1"
 
 // max number of molotovs for terrorist team / 0 - no molotovs
 // -
@@ -138,6 +168,18 @@ mywa_awp_min_ct "3"
 // Minimum: "1.000000"
 mywa_scout_min_ct "2"
 
+// min number of player in counter-terrorist team before taser is available for CT
+// -
+// Default: "2"
+// Minimum: "1.000000"
+mywa_taser_min_ct "2"
+
+// min number of player in counter-terrorist team before Xm1014 is available for T
+// -
+// Default: "2"
+// Minimum: "1.000000"
+mywa_xm1014_min_ct "2"
+
 // max number of AWPs for counter-terrorist team / 0 - no AWPs
 // -
 // Default: "1"
@@ -149,6 +191,18 @@ mywa_awp_ct "1"
 // Default: "1"
 // Minimum: "0.000000"
 mywa_scout_ct "1"
+
+// max number of tasers for counter-terrorist team/ 0 - no scouts
+// -
+// Default: "1"
+// Minimum: "0.000000"
+mywa_taser_ct "1"
+
+// max number of xm1014s for counter-terrorist team/ 0 - no xm1014s
+// -
+// Default: "1"
+// Minimum: "0.000000"
+mywa_xm1014_ct "1"
 
 // max number of molotovs for counter-terrorist team / 0 - no molotovs
 // -
@@ -202,12 +256,26 @@ mywa_helm "1"
 // Maximum: "1.000000"
 mywa_defuser "1"
 
+// 0 - disabled, 1 - enable taser
+// -
+// Default: "0"
+// Minimum: "0.000000"
+// Maximum: "1.000000"
+mywa_taser "1"
+
 // 0 - disabled, 1 - enable deagle for pistol & fullbuy rounds
 // -
 // Default: "1"
 // Minimum: "0.000000"
 // Maximum: "1.000000"
 mywa_deagle "1"
+
+// 0 - disabled, 1 - enable deagle for forcebuy rounds
+// -
+// Default: "1"
+// Minimum: "0.000000"
+// Maximum: "1.000000"
+mywa_deagleforce "1"
 
 // 0 - disabled, 1 - enable revolver for pistol & fullbuy rounds
 // -
@@ -216,10 +284,32 @@ mywa_deagle "1"
 // Maximum: "1.000000"
 mywa_revolver "1"
 
+// 0 - disabled, 1 - enable p90 for fullbuy rounds
+// -
+// Default: "1"
+// Minimum: "0.000000"
+// Maximum: "1.000000"
+mywa_p90 "1"
+
+// 0 - disabled, 1 - enable nova for forcebuy & fullbuy rounds
+// -
+// Default: "1"
+// Minimum: "0.000000"
+// Maximum: "1.000000"
+mywa_nova "1"
+
+// 0 - disabled, 1 - enable xm1014 for forcebuy & fullbuy rounds
+// -
+// Default: "1"
+// Minimum: "0.000000"
+// Maximum: "1.000000"
+mywa_xm1014 "1"
+
 // 0 - disabled, 1 - enable bombsite notifications
 // -
 // Default: "1"
 // Minimum: "0.000000"
 // Maximum: "1.000000"
 mywa_bombsite "1"
+
 ```
