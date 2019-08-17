@@ -134,7 +134,7 @@ public Plugin myinfo =
 	name = "MyWeaponAllocator",
 	author = "shanapu",
 	description = "Retakes weapon allocator",
-	version = "2.4",
+	version = "2.5",
 	url = "https://github.com/shanapu/MyWeaponAllocator"
 };
 
@@ -219,7 +219,6 @@ public void OnPluginStart()
 
 	HookEvent("round_start", Event_RoundStart, EventHookMode_Pre);
 	HookEvent("bomb_planted", Event_BombPlanted, EventHookMode_Post);
-//	HookEvent("begin_new_match", Event_BeginNewMatch);
 
 	g_hPrimary_CT = RegClientCookie("MyWA - Primary CT", "", CookieAccess_Private);
 	g_hSecondary_CT = RegClientCookie("MyWA - Secondary CT", "", CookieAccess_Private);
@@ -278,6 +277,7 @@ public void OnClientConnected(int client)
 	Format(g_sPrimary_T[client], sizeof(g_sPrimary_T), "weapon_ak47");
 	Format(g_sSecondary_T[client], sizeof(g_sSecondary_T), "weapon_glock");
 	Format(g_sSMG_T[client], sizeof(g_sSMG_T), "weapon_ump45");
+
 	g_bSniper[client] = false;
 	g_bTaser[client] = false;
 	g_bXm1014[client] = false;
@@ -442,8 +442,10 @@ public Action Command_Taser(int client, int args)
 {
 	if (!gc_bPlugin.BoolValue)
 		return Plugin_Handled;
+	
 	if (!gc_bTaser.BoolValue)
 		return Plugin_Handled;
+
 	if (!IsValidClient(client))
 		return Plugin_Handled;
 
@@ -456,8 +458,10 @@ public Action Command_AutoShotGun(int client, int args)
 {
 	if (!gc_bPlugin.BoolValue)
 		return Plugin_Handled;
+
 	if (!gc_bXm1014.BoolValue)
 		return Plugin_Handled;
+
 	if (!IsValidClient(client))
 		return Plugin_Handled;
 
@@ -685,6 +689,7 @@ void Menu_Primary(int client)
 {
 	char sBuffer[255];
 	Menu menu = new Menu(Handler_Primary);
+
 	if (g_bIsCT[client])
 	{
 		Format(sBuffer, sizeof(sBuffer), "%t\n", "Select a CT rifle");
@@ -700,10 +705,17 @@ void Menu_Primary(int client)
 		menu.AddItem("weapon_galilar", "Galil AR");
 		menu.AddItem("weapon_sg556", "SG 553");
 	}
+
 	if (gc_bP90.BoolValue)
+	{
 		menu.AddItem("weapon_p90", "P90");
+	}
+
 	if (gc_bNova.BoolValue)
+	{
 		menu.AddItem("weapon_nova", "Nova");
+	}
+
 	menu.SetTitle(sBuffer);
 	menu.ExitButton = true;
 
@@ -759,10 +771,17 @@ void Menu_SMG(int client)
 	menu.AddItem("weapon_p90", "P90");
 	menu.AddItem("weapon_mp7", "MP7");
 	menu.AddItem("weapon_mp5sd", "MP5-SD");
+	
 	if (gc_bDeagleForce.BoolValue)
+	{
 		menu.AddItem("weapon_deagle","Deagle");
+	}
+
 	if (gc_bNova.BoolValue)
+	{
 		menu.AddItem("weapon_nova", "Nova");
+	}
+
 	if (g_bIsCT[client])
 	{
 		Format(sBuffer, sizeof(sBuffer), "%t\n", "Select a CT SMG");
@@ -802,7 +821,7 @@ public void Menu_Taser(int client)
 {
 	char sBuffer[255];
 	Menu menu = new Menu(Handler_Taser);
-	
+
 	Format(sBuffer, sizeof(sBuffer), "%t", "Yes");
 	menu.AddItem("1", sBuffer);
 	Format(sBuffer, sizeof(sBuffer), "%t", "No");
@@ -818,7 +837,7 @@ public void Menu_Xm1014(int client)
 {
 	char sBuffer[255];
 	Menu menu = new Menu(Handler_Xm1014);
-	
+
 	Format(sBuffer, sizeof(sBuffer), "%t", "Yes");
 	menu.AddItem("1", sBuffer);
 	Format(sBuffer, sizeof(sBuffer), "%t", "No");
@@ -857,6 +876,10 @@ public int Handler_Primary(Menu menu, MenuAction action, int client, int selecti
 			Retakes_Message(client, "%t", "Weapons next round");
 		}
 	}
+	else if (action == MenuAction_End)
+	{
+		delete menu;
+	}
 }
 
 public int Handler_Secondary(Menu menu, MenuAction action, int client, int selection)
@@ -884,6 +907,10 @@ public int Handler_Secondary(Menu menu, MenuAction action, int client, int selec
 		{
 			Retakes_Message(client, "%t", "Weapons next round");
 		}
+	}
+	else if (action == MenuAction_End)
+	{
+		delete menu;
 	}
 }
 
@@ -926,6 +953,10 @@ public int Handler_SMG(Menu menu, MenuAction action, int client, int selection)
 			}
 		}
 	}
+	else if (action == MenuAction_End)
+	{
+		delete menu;
+	}
 }
 
 public int Handler_AWP(Menu menu, MenuAction action, int client, int selection)
@@ -953,6 +984,10 @@ public int Handler_AWP(Menu menu, MenuAction action, int client, int selection)
 			Retakes_Message(client, "%t", "Weapons next round");
 		}
 	}
+	else if (action == MenuAction_End)
+	{
+		delete menu;
+	}
 }
 
 public int Handler_Taser(Menu menu, MenuAction action, int client, int selection)
@@ -974,6 +1009,10 @@ public int Handler_Taser(Menu menu, MenuAction action, int client, int selection
 
 		Retakes_Message(client, "%t", "Weapons next round");
 	}
+	else if (action == MenuAction_End)
+	{
+		delete menu;
+	}
 }
 
 public int Handler_Xm1014(Menu menu, MenuAction action, int client, int selection)
@@ -994,6 +1033,10 @@ public int Handler_Xm1014(Menu menu, MenuAction action, int client, int selectio
 		}
 
 		Retakes_Message(client, "%t", "Weapons next round");
+	}
+	else if (action == MenuAction_End)
+	{
+		delete menu;
 	}
 }
 
