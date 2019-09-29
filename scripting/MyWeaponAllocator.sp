@@ -1435,7 +1435,7 @@ void GiveNades(int client, int money, int order)
 			if (g_iMolotov_T < gc_iMolotov_T.IntValue && money >= 400)
 			{
 				GivePlayerItem(client, "weapon_molotov");
-				money -= 400;
+				money -= GetWeaponPrice("weapon_molotov");
 				g_iMolotov_T++;
 			}
 			else
@@ -1448,7 +1448,7 @@ void GiveNades(int client, int money, int order)
 			if (g_iSmokegrenade_T < gc_iSmoke_T.IntValue && money >= 300)
 			{
 				GivePlayerItem(client, "weapon_smokegrenade");
-				money -= 300;
+				money -= GetWeaponPrice("weapon_smokegrenade");
 				g_iSmokegrenade_T++;
 			}
 			else
@@ -1461,7 +1461,7 @@ void GiveNades(int client, int money, int order)
 			if (g_iHEgrenade_T < gc_iHEgrenade_T.IntValue && money >= 300)
 			{
 				GivePlayerItem(client, "weapon_hegrenade");
-				money -= 300;
+				money -= GetWeaponPrice("weapon_hegrenade");
 				g_iHEgrenade_T++;
 			}
 			else
@@ -1474,7 +1474,7 @@ void GiveNades(int client, int money, int order)
 			if (g_iFlashbang_T < gc_iFlash_T.IntValue && money >= 200)
 			{
 				GivePlayerItem(client, "weapon_flashbang");
-				money -= 200;
+				money -= GetWeaponPrice("weapon_flashbang");
 				g_iFlashbang_T++;
 			}
 		}
@@ -1488,7 +1488,7 @@ void GiveNades(int client, int money, int order)
 			if (g_iMolotov_CT < gc_iMolotov_CT.IntValue && money >= 600)
 			{
 				GivePlayerItem(client, "weapon_incgrenade");
-				money -= 400;
+				money -= GetWeaponPrice("weapon_incgrenade");
 				g_iMolotov_CT++;
 			}
 			else
@@ -1501,7 +1501,7 @@ void GiveNades(int client, int money, int order)
 			if (g_iSmokegrenade_CT < gc_iSmoke_CT.IntValue && money >= 300)
 			{
 				GivePlayerItem(client, "weapon_smokegrenade");
-				money -= 300;
+				money -= GetWeaponPrice("weapon_smokegrenade");
 				g_iSmokegrenade_CT++;
 			}
 			else
@@ -1514,7 +1514,7 @@ void GiveNades(int client, int money, int order)
 			if (g_iHEgrenade_CT < gc_iHEgrenade_CT.IntValue && money >= 300)
 			{
 				GivePlayerItem(client, "weapon_hegrenade");
-				money -= 300;
+				money -= GetWeaponPrice("weapon_hegrenade");
 				g_iHEgrenade_CT++;
 			}
 			else
@@ -1527,7 +1527,7 @@ void GiveNades(int client, int money, int order)
 			if (g_iFlashbang_CT < gc_iFlash_CT.IntValue && money >= 200)
 			{
 				GivePlayerItem(client, "weapon_flashbang");
-				money -= 200;
+				money -= GetWeaponPrice("weapon_flashbang");
 				g_iFlashbang_CT++;
 			}
 		}
