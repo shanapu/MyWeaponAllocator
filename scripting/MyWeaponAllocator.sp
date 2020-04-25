@@ -1082,17 +1082,17 @@ void EquipWeapons(int client)
 			}
 			if (iRandom == 1 && g_bSniper[client] && (gc_iAWP_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT) || CanPriorityAWP(client)))
 			{
-				if (g_iAWP_CT < gc_iAWP_CT.IntValue)
-				{
-					GivePlayerItem(client, "weapon_awp");
-					iMoney -= GetWeaponPrice("weapon_awp");
-					g_iAWP_CT++;
-				}
-				else if (CanPriorityAWP(client) && g_iPriority_AWP_CT < gc_iPriority_AWPsCT.IntValue)
+				if (CanPriorityAWP(client) && g_iPriority_AWP_CT < gc_iPriority_AWPsCT.IntValue)
 				{
 					GivePlayerItem(client, "weapon_awp");
 					iMoney -= GetWeaponPrice("weapon_awp");
 					g_iPriority_AWP_CT++;
+				}
+				else if (g_iAWP_CT < gc_iAWP_CT.IntValue)
+				{
+					GivePlayerItem(client, "weapon_awp");
+					iMoney -= GetWeaponPrice("weapon_awp");
+					g_iAWP_CT++;
 				}
 				else
 				{
@@ -1138,17 +1138,17 @@ void EquipWeapons(int client)
 			}
 			if (iRandom == 1 && g_bSniper[client] && (gc_iAWP_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T) || CanPriorityAWP(client)))
 			{
-				if (g_iAWP_T < gc_iAWP_T.IntValue)
-				{
-					GivePlayerItem(client, "weapon_awp");
-					iMoney -= GetWeaponPrice("weapon_awp");
-					g_iAWP_T++;
-				}
-				else if (CanPriorityAWP(client) && g_iPriority_AWP_T < gc_iPriority_AWPsT.IntValue)
+				if (CanPriorityAWP(client) && g_iPriority_AWP_T < gc_iPriority_AWPsT.IntValue)
 				{
 					GivePlayerItem(client, "weapon_awp");
 					iMoney -= GetWeaponPrice("weapon_awp");
 					g_iPriority_AWP_T++;
+				}
+				else if (g_iAWP_T < gc_iAWP_T.IntValue)
+				{
+					GivePlayerItem(client, "weapon_awp");
+					iMoney -= GetWeaponPrice("weapon_awp");
+					g_iAWP_T++;
 				}
 				else
 				{
