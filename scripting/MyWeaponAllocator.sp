@@ -3,8 +3,7 @@
  * by: shanapu
  * 
  * Copyright (C) 2016-2019 Thomas Schmidt (shanapu)
- * Contributer: LemonPAKA
- 
+ * Contributors: LemonPAKA, B3none
  * Idea, commissioning & testing: Leeter & xooni
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -76,7 +75,9 @@ ConVar gc_iTaser_MinCT;
 ConVar gc_iTaser_MinT;
 ConVar gc_iXm1014_MinCT;
 ConVar gc_iXm1014_MinT;
+ConVar gc_iPriority_AWPsT;
 ConVar gc_iAWP_T;
+ConVar gc_iPriority_AWPsCT;
 ConVar gc_iAWP_CT;
 ConVar gc_iScout_T;
 ConVar gc_iScout_CT;
@@ -88,6 +89,7 @@ ConVar gc_iFullMoney;
 ConVar gc_iPistolMoney;
 ConVar gc_iForceMoney;
 ConVar gc_bBombsite;
+ConVar gc_bAwpPriority;
 ConVar gc_iOrder;
 ConVar gc_bKevlar;
 ConVar gc_bHelm;
@@ -109,7 +111,9 @@ int g_iSmokegrenade_CT = 0;
 int g_iSmokegrenade_T = 0;
 int g_iMolotov_CT = 0;
 int g_iMolotov_T = 0;
+int g_iPriority_AWP_CT = 0;
 int g_iAWP_CT = 0;
+int g_iPriority_AWP_T = 0;
 int g_iAWP_T = 0;
 int g_iScout_CT = 0;
 int g_iScout_T = 0;
@@ -134,7 +138,7 @@ public Plugin myinfo =
 	name = "MyWeaponAllocator",
 	author = "shanapu",
 	description = "Retakes weapon allocator",
-	version = "2.5",
+	version = "2.6",
 	url = "https://github.com/shanapu/MyWeaponAllocator"
 };
 
@@ -172,6 +176,7 @@ public void OnPluginStart()
 	gc_iPistolMoney = AutoExecConfig_CreateConVar("mywa_money_pistol", "800", "money for weapons and equipment on pistol round", _, true, 0.0);
 	gc_iForceMoney = AutoExecConfig_CreateConVar("mywa_money_force", "2700", "money for weapons and equipment on forcebuy round", _, true, 0.0);
 
+	gc_iPriority_AWPsT = AutoExecConfig_CreateConVar("mywa_priority_awps_t", "1", "number of priority AWPs available for T", _, true, 1.0);
 	gc_iAWP_MinT = AutoExecConfig_CreateConVar("mywa_awp_min_t", "3", "min number of player in terrorist team before AWP is available for T", _, true, 1.0);
 	gc_iScout_MinT = AutoExecConfig_CreateConVar("mywa_scout_min_t", "2", "min number of player in terrorist team before scout is available for T", _, true, 1.0);
 	gc_iTaser_MinT = AutoExecConfig_CreateConVar("mywa_taser_min_t", "2", "min number of player in terrorist team before taser is available for T", _, true, 1.0);
@@ -185,6 +190,7 @@ public void OnPluginStart()
 	gc_iFlash_T = AutoExecConfig_CreateConVar("mywa_flash_t", "3", "max number of flashbangs for terrorist team / 0 - no flashbangs", _, true, 0.0);
 	gc_iHEgrenade_T = AutoExecConfig_CreateConVar("mywa_he_t", "3", "max number of HEgrenades for terrorist team / 0 - no HEgrenades", _, true, 0.0);
 
+	gc_iPriority_AWPsCT = AutoExecConfig_CreateConVar("mywa_priority_awps_ct", "1", "number of priority AWPs available for CT", _, true, 1.0);
 	gc_iAWP_MinCT = AutoExecConfig_CreateConVar("mywa_awp_min_ct", "3", "min number of player in counter-terrorist team before AWP is available for CT", _, true, 1.0);
 	gc_iScout_MinCT = AutoExecConfig_CreateConVar("mywa_scout_min_ct", "2", "min number of player in counter-terrorist team before scout is available for CT", _, true, 1.0);
 	gc_iTaser_MinCT = AutoExecConfig_CreateConVar("mywa_taser_min_ct", "2", "min number of player in counter-terrorist team before taser is available for CT", _, true, 1.0);
@@ -213,6 +219,7 @@ public void OnPluginStart()
 	gc_bXm1014 = AutoExecConfig_CreateConVar("mywa_xm1014", "1", "0 - disabled, 1 - enable xm1014 for forcebuy & fullbuy rounds", _, true, 0.0, true, 1.0);
 
 	gc_bBombsite = AutoExecConfig_CreateConVar("mywa_bombsite", "1", "0 - disabled, 1 - enable bombsite notifications", _, true, 0.0, true, 1.0);
+	gc_bAwpPriority = AutoExecConfig_CreateConVar("mywa_priority_awps", "1", "0 - disabled, 1 - enable priority awps for admins and VIPs", _, true, 0.0, true, 1.0);
 
 	AutoExecConfig_ExecuteFile();
 	AutoExecConfig_CleanFile();
@@ -600,7 +607,9 @@ void EquipAllPlayerWeapon()
 	g_iSmokegrenade_T = 0;
 	g_iMolotov_CT = 0;
 	g_iMolotov_T = 0;
+	g_iPriority_AWP_CT = 0;
 	g_iAWP_CT = 0;
+	g_iPriority_AWP_T = 0;
 	g_iAWP_T = 0;
 	g_iScout_CT = 0;
 	g_iScout_T = 0;
@@ -1071,10 +1080,15 @@ void EquipWeapons(int client)
 					g_iTaser_CT++;
 				}
 			}
-			if (iRandom == 1 && g_bSniper[client] && gc_iAWP_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT))
+			if (iRandom == 1 && g_bSniper[client] && (gc_iAWP_MinCT.IntValue <= GetPlayerCount(true, CS_TEAM_CT) || CanPriorityAWP(client)))
 			{
-				
-				if (g_iAWP_CT < gc_iAWP_CT.IntValue)
+				if (CanPriorityAWP(client) && g_iPriority_AWP_CT < gc_iPriority_AWPsCT.IntValue)
+				{
+					GivePlayerItem(client, "weapon_awp");
+					iMoney -= GetWeaponPrice("weapon_awp");
+					g_iPriority_AWP_CT++;
+				}
+				else if (g_iAWP_CT < gc_iAWP_CT.IntValue)
 				{
 					GivePlayerItem(client, "weapon_awp");
 					iMoney -= GetWeaponPrice("weapon_awp");
@@ -1122,9 +1136,15 @@ void EquipWeapons(int client)
 					g_iTaser_T++;
 				}
 			}
-			if (iRandom == 1 && g_bSniper[client] && gc_iAWP_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T))
+			if (iRandom == 1 && g_bSniper[client] && (gc_iAWP_MinT.IntValue <= GetPlayerCount(true, CS_TEAM_T) || CanPriorityAWP(client)))
 			{
-				if (g_iAWP_T < gc_iAWP_T.IntValue)
+				if (CanPriorityAWP(client) && g_iPriority_AWP_T < gc_iPriority_AWPsT.IntValue)
+				{
+					GivePlayerItem(client, "weapon_awp");
+					iMoney -= GetWeaponPrice("weapon_awp");
+					g_iPriority_AWP_T++;
+				}
+				else if (g_iAWP_T < gc_iAWP_T.IntValue)
 				{
 					GivePlayerItem(client, "weapon_awp");
 					iMoney -= GetWeaponPrice("weapon_awp");
@@ -1620,6 +1640,11 @@ void DisablePlugin(char[] plugin)
 
 		LogMessage("%s was unloaded and moved to %s to avoid conflicts", sPath, sNewPath);
 	}
+}
+
+bool CanPriorityAWP(int client)
+{
+	return gc_bAwpPriority.BoolValue && CheckCommandAccess(client, "mywa_priority_awp", ADMFLAG_GENERIC);
 }
 
 int GetWeaponPrice(char[] weapon)
