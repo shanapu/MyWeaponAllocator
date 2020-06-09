@@ -1644,7 +1644,7 @@ void DisablePlugin(char[] plugin)
 
 bool CanPriorityAWP(int client)
 {
-	return gc_bAwpPriority.BoolValue && CheckCommandAccess(client, "sm_admin_check", ADMFLAG_GENERIC);
+	return gc_bAwpPriority.BoolValue && CheckCommandAccess(client, "mywa_priority_awp", ADMFLAG_GENERIC);
 }
 
 int GetWeaponPrice(char[] weapon)
