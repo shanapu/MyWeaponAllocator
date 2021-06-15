@@ -474,6 +474,8 @@ public void Event_BombPlanted(Event event, const char[] name, bool dontBroadcast
 {
 	if(!gc_bBombsite.BoolValue)
 		return;
+	if(!Retakes_Live())
+		return;
 
 	PrintCenterTextAll("<font face='Arial' size='20'>%t </font>\n\t<font face='Arial' color='#00FF00' size='30'><b>%s</b></font></font>", "Bomb planted on Bombsite", g_sBombSite);
 }
